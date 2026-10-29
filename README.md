@@ -1,61 +1,24 @@
-<div align="center">
-
 # CrossAgents
 
-**让不同厂商的编码 agent 组成一个团队，在你眼皮底下一起干活。**
+让编码 agent 组成一个团队。
 
-Claude Code、Codex、WorkBuddy 和任何讲 ACP 的 agent，可以在同一个对话里互相招人、分工、交接、审查。
-每个任务都在独立的 git worktree 里做，由 hub 跑验收命令；最后落不落地，由你决定。
+**[下载 Windows 版](../../releases/latest)** · [网站](https://l1nkkkk.github.io/CrossAgents-releases/) · [English](README.en.md)
 
-[下载最新版](../../releases/latest) · [English](README.en.md)
+![CrossAgents](screens/hero.png)
 
-![一个 run 正在进行：主导在对话里汇报进度，右侧是各任务的状态，底部是一个等你回答的问题](screens/hero.png)
+| 交接 | 追溯 | 提交图 |
+|---|---|---|
+| ![交接](screens/handoff.png) | ![追溯](screens/trace.png) | ![提交图](screens/graph.png) |
 
-</div>
+## 开始
 
-## 一个 run 是怎么走的
+1. 运行 `CrossAgents-Setup-<版本>.exe`
+2. 登录一个 agent：
 
-**1. 说出你想要什么，主导拆计划。** 主导先读代码，再把需求拆成几个任务，每个任务带规格和验收命令，指派给合适的队友。你可以改每个任务交给谁，然后选托管程度：「我审批」「半托管」或「全托管」。
+   | Agent | |
+   |---|---|
+   | Claude Code | `claude auth login` |
+   | Codex | `codex login` |
+   | WorkBuddy | `npm install -g @tencent-ai/codebuddy-code`，再在 `codebuddy` 里 `/login` |
 
-![计划待审批：四个任务，每个都能改派给别的队友，下方是托管程度和批准按钮](screens/plan.png)
-
-**2. 队友并行开工，遇到问题会直接问你。** 每个任务开一个新 worktree，同时进行。agent 拿不准的事会在对话里给出选项，等你选；过了时限就按默认走。
-
-**3. 卡住了自己想办法。** 验收没过会打回重做，多次失败就升级给更强的队友，账号额度用完换另一个账号。每一次交接都留在任务卡上，看得出谁交给了谁、为什么。
-
-![交接链：#c 返工后改派给 Mia，#d 两次没过升级给 Kai，#b 额度用完改到另一个账号](screens/handoff.png)
-
-**4. 你来审，你来落地。** 任务完成后看整份 diff，点行号写意见，可以发回给 worker，也可以打回重做。所有任务合进 run 分支后，由你决定要不要落到 main。
-
-![审查任务：右侧是 #c 的 worker 总结和带行号的 diff，底部可以发意见或打回](screens/review.png)
-
-## 出了问题，看得见为什么
-
-**追溯**把每个任务的每一轮、每条命令、退出码和花费都列出来。首个失败标红展开，中途出过错但最后通过的任务灰色折叠。
-
-![追溯：#d 失败，展开看到 cargo test 有两个用例没过](screens/trace.png)
-
-**提交图**画出 main、run 分支和各任务分支，点合并提交就能看它带进来的改动。
-
-![提交图：三个任务分支合进 run 分支，选中一个合并提交，下方是它的 diff](screens/graph.png)
-
-## 也可以只和一个 agent 聊
-
-不用开 run，直接找一个队友单聊。它干活时，工具调用会折叠成一行，正在跑的命令输出实时可见；新消息自动排在本轮之后。右侧显示上下文用了多少、缓存命中率和花费。
-
-![单聊：Nova 正在推理，两条消息排队等发；右侧是上下文占用和花费](screens/solo.png)
-
-## 安装
-
-1. 从 [Releases](../../releases/latest) 下载 `CrossAgents-Setup-<版本>.exe` 并运行。安装到当前用户，不需要管理员权限。安装包里带了对应版本的 `crossagents.exe` hub，打开应用时会自动启动它。
-2. 在终端里登录至少一个 agent：
-   - **Claude Code**：`claude auth login`（桌面版里的登录这里用不上）
-   - **Codex**：`codex login`，或者用应用里的账号管理导入现有登录
-   - **WorkBuddy**：另外装 CodeBuddy CLI（`npm install -g @tencent-ai/codebuddy-code`），用 `/login` 登录一次
-3. 在应用里新建队友，选好模型，就可以开始了。
-
-应用会自动更新：后台从这个仓库下载新版本，退出时安装。
-
-安装包还没有代码签名，第一次运行时 Windows SmartScreen 可能会提示，点「更多信息 → 仍要运行」即可。
-
-> 这个仓库只放发布版本，源码是私有的。截图里的项目和对话都是演示数据。
+<sub>按用户安装，自动更新。安装包未签名，SmartScreen 提示时选「更多信息 → 仍要运行」。源码私有，这里只放发布版本；画面中均为演示数据。</sub>
